@@ -1,14 +1,27 @@
-# Serving Qwen-3 with SGLang
+# Serving Qwen3-0.6B with SGLang
 This repo is the implementation for the Microsoft internship assignment.
 
-## Delpoyment
+## Serving the model with SGLang
 
-> **TO-DO**: Use a Python script instead of bash script.
-
-Run the following shell to start the backend:
+Simply run the following command:
 ```bash
-bash sgl.sh
+python3 client.py [OPTIONS]
 ```
+
+Then a Docker container that starts the SGLang service will be set up. The available options are:
+| 参数名              | 说明                                                                 | 默认值                                      |
+|---------------------|----------------------------------------------------------------------|---------------------------------------------|
+| `--model-name`      | Model name                                                           | Qwen3-0.6B                                  |
+| `--port`            | Service port                                                         | 30000                                       |
+| `--tp`              | **T**ensor **P**arallel size (GPU Numbers)                | 1                                           |
+| `--local-save-path` | Local path to the model                                              | /NV/models_hf/Qwen/Qwen3-0.6B               |
+| `--container-name`  | Docker container name                                                | qwen-test                                   |
+| `--image`           | Docker image name                                                    | sglang/sglang:latest                        |
+
+
+
+
+### Simply Chat with the deployed model
 
 Now the Qwen3-0.6B has been deployed at `http://127.0.0.1:30000`. For simple chatting usage, just run the following command:
 ```bash
