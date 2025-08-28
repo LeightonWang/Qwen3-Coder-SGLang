@@ -88,8 +88,34 @@ python3 inference_he.py --think --debug -o he_results_debug_think_results.jsonl
 ## 3. Evaluation
 In this part, a sandbox environment should be setup to assess the pass rate of the HumanEval results obtained from the previous step.
 
-> TO BE IMPLEMENTED
+### Build the Docker Image
+I prepare a Dockerfile in the root directory to build a minimal image for evaluation. Simply run
+```bash
+docker build -t humaneval_eval:latest .
+```
+and the image will be built.
 
+### Perform Evaluation in Command Line
+We can run the evaluation in the command line. Launch the container:
+```bash
+docker run -it --rm \
+    -v $(pwd)/results:/app/results \
+    -v $(pwd)/datasets:/app/datasets \
+    humaneval_eval:latest
+```
+
+Then in the container, run the evaluation script:
+```bash
+cd evaluate
+python3 evaluate.py [OPTIONS]
+```
+Available options:
+| Parameter | Description | Default |
+|------|------|--------|
+| `-f`, `--file` | The output file to be evaluated. | `../outputs/he_results_no_think.jsonl`. |
+
+### Perform Evaluation by Script
+> TO BE DONE
 
 ## Troubleshooting
 This part is mainly written for myself to record some problems I encountered during the deployment & development process.

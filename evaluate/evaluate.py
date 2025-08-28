@@ -39,7 +39,7 @@ def evaluate_sample(sample):
 
 def main():
     parser = argparse.ArgumentParser(description="Evaluate HumanEval results.")
-    parser.add_argument("-f", "--file", type=str, default="outputs/he_results_no_think.jsonl", help="Path to the results file.")
+    parser.add_argument("-f", "--file", type=str, default="../outputs/he_results_no_think.jsonl", help="Path to the output file.")
 
     args = parser.parse_args()
 
