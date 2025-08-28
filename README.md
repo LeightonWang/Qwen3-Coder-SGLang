@@ -129,6 +129,12 @@ Available options:
 
 Then the script will launch a container and perform the evaluation automatically. The process is the same as the command line method.
 
+### 3.3 Evaluation Results
+The pass rate results:
+| Think Mode | System Prompt | Output File | Pass Rate |
+|------------|---------------|-------------|-----------|
+| No         | Default       | he_results_no_think.jsonl | 87.80% (144/164) |
+
 ## Troubleshooting
 This part is mainly written for myself to record some problems I encountered during the deployment & development process.
 
