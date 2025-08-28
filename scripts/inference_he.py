@@ -10,10 +10,16 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-o", "--output_file", type=str, default="humaneval_results.jsonl",
                         help="output file name. Should be at results/")
-    parser.add_argument("--think", type=bool, default=False,
-                        help="Enable think mode of the model or not.")
-    parser.add_argument("--debug", type=bool, default=False,
-                        help="Debug mode. If true, 4-sample datasets would be used insted of the complete one.")
+    parser.add_argument(
+        "--think",
+        action="store_true",
+        help="Enable think mode of the model."
+    )
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Debug mode. If set, only 4-sample dataset will be used."
+    )
     args = parser.parse_args()
 
     output_file = args.output_file
