@@ -23,7 +23,7 @@ def main():
 
     # 拼接 docker 命令
     docker_cmd = [
-        "sudo", "docker", "run", "-t", "-d",
+        "sudo", "docker", "run", "-t",
         f"--name={args.container_name}",
         "--ipc=host",
         "--cap-add=SYS_PTRACE",
