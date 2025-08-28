@@ -1,7 +1,9 @@
 # Serving Qwen3-0.6B with SGLang
 This repo is the implementation for the Microsoft internship assignment.
 
-## Serving the model with SGLang
+Since GitHub cannot be accessed stably in the development server, repos used in this repo are forked and mirroed to Gitee. This repo itself is also mirrored to Gitee during development.
+
+## 1. Serving the model with SGLang
 
 Simply run the following command:
 ```bash
@@ -18,7 +20,7 @@ Then a Docker container that starts the SGLang service will be set up. The avail
 | `--container-name`  | Docker container name                                                | qwen-test                                   |
 | `--image`           | Docker image name                                                    | sglang/sglang:latest                        |
 
-
+All the default values are set for my own environment for convenience. You may need to change them according to your own environment.
 
 
 ### Simply Chat with the deployed model
@@ -39,3 +41,12 @@ The response should be like:
 ```json
 {"id":"12730b4f37924164a9d051d8d8c65d43","object":"chat.completion","created":1756301670,"model":"Qwen/Qwen3-0.6B","choices":[{"index":0,"message":{"role":"assistant","content":"Great job! 🎉 I'm really glad you did it. If you have any questions or need further assistance, feel free to ask! 😊","reasoning_content":"Okay, the user said \"Damn, I finally deployed you successfully.\" Let me think about how to respond. First, I need to acknowledge their success. Maybe start with something like, \"Great job!\" to show excitement. Then, add something helpful, like confirming that the deployment was successful and offer further assistance. Keep the tone positive and open for questions. Avoid any negative language, so just focus on celebration and support. Make sure the response is friendly and engaging.\n","tool_calls":null},"logprobs":null,"finish_reason":"stop","matched_stop":151645}],"usage":{"prompt_tokens":15,"total_tokens":145,"completion_tokens":130,"prompt_tokens_details":null}}
 ```
+
+## 2. Inference
+In this part, I will develop a script to perform inference on HumanEval dataset. The script should interact with the served model to generate predictions for the provided samples.
+
+
+## Troubleshooting
+This part is mainly written for myself to record some problems I encountered during the deployment & development process.
+
+1. **Unable to get GPG Key for Nvidia Container Toolkit**: The official source for the GPG keys cannot be accessed in my place. Use [USTC mirror](https://mirrors.ustc.edu.cn/help/libnvidia-container.html) instead.
