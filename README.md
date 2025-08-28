@@ -67,9 +67,9 @@ There are 2 datasets in the directory `datasets/`:
 `HumanEval.jsonl` is the complete HumanEval dataset. `HumanEval_4.jsonl` is a small subset of the complete dataset, containing only 4 samples. It is used for quick testing and debugging.
 
 ### Inference Script
-Inference script is `scripts/inference_he.py`. To run the inference:
+Inference script is `inference/inference_he.py`. To run the inference:
 ```bash
-cd scripts
+cd inference
 python3 inference_he.py [OPTIONS]
 ```
 Available options:
