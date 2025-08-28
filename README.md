@@ -1,7 +1,5 @@
 # Serving Qwen3-0.6B with SGLang
-This repo is the implementation for the Microsoft internship assignment.
-
-Since GitHub cannot be accessed stably in the development server, repos used in this repo are forked and mirroed to Gitee. This repo itself is also mirrored to Gitee during development.
+This repo is the implementation of an assignment. The goal is to serve the Qwen3-0.6B model with SGLang, and then perform inference on HumanEval dataset, and finally evaluate the results.
 
 ## Prerequisites
 Other versions of the softwares and packages may also work. This is just what I used in my own environment.
@@ -56,7 +54,7 @@ The response should be like:
 ## 2. Inference
 In this part, I will develop a script to perform inference on HumanEval dataset. The script should interact with the served model to generate predictions for the provided samples.
 
-### Datasets
+### 2.1 Datasets
 There are 2 datasets in the directory `datasets/`:
 ```text
 .
@@ -66,7 +64,7 @@ There are 2 datasets in the directory `datasets/`:
 ```
 `HumanEval.jsonl` is the complete HumanEval dataset. `HumanEval_4.jsonl` is a small subset of the complete dataset, containing only 4 samples. It is used for quick testing and debugging.
 
-### Inference Script
+### 2.2 Inference Script
 Inference script is `inference/inference_he.py`. To run the inference:
 ```bash
 cd inference
@@ -88,14 +86,17 @@ python3 inference_he.py --think --debug -o he_results_debug_think_results.jsonl
 ## 3. Evaluation
 In this part, a sandbox environment should be setup to assess the pass rate of the HumanEval results obtained from the previous step.
 
-### Build the Docker Image
+### 3.1Build the Docker Image
 I prepare a Dockerfile in the root directory to build a minimal image for evaluation. Simply run
 ```bash
 docker build -t humaneval_eval:latest .
 ```
 and the image will be built.
 
-### Perform Evaluation in Command Line
+### 3.2 Perform Evaluation
+Once the image is built, we can perform the evaluation. 2 methods are provided: command line and script, where the latter one automates the whole process.
+
+#### 3.2.1 Perform Evaluation in Command Line
 We can run the evaluation in the command line. Launch the container:
 ```bash
 docker run -it --rm \
@@ -114,10 +115,25 @@ Available options:
 |------|------|--------|
 | `-f`, `--file` | The output file to be evaluated. | `../outputs/he_results_no_think.jsonl`. |
 
-### Perform Evaluation by Script
-> TO BE DONE
+The evaluation results will be printed in the terminal.
+
+#### 3.2.2 Perform Evaluation by Script
+I also prepare a script `auto-evaluate.py` in the root directory to automate the evaluation process. Simply run
+```bash
+python3 auto-evaluate.py [OPTIONS]
+```
+Available options:
+| Parameter | Description | Default |
+|------|------|--------|
+| `-f`, `--file` | The output file to be evaluated. | `outputs/humaneval_results.jsonl`. |  
+
+Then the script will launch a container and perform the evaluation automatically. The process is the same as the command line method.
 
 ## Troubleshooting
 This part is mainly written for myself to record some problems I encountered during the deployment & development process.
 
-1. **Unable to get GPG Key for Nvidia Container Toolkit**: The official source for the GPG keys cannot be accessed in my place. Use [USTC mirror](https://mirrors.ustc.edu.cn/help/libnvidia-container.html) instead.
+1. **Unable to Access HuggingFace**: The official source cannot be accessed in my place. Add `HF_ENDPOINT` to the environment variables to use a mirror site.
+    ```bash
+    export HF_ENDPOINT=https://hf-mirror.com
+    ```
+2. **Unable to get GPG Key for Nvidia Container Toolkit**: The official source for the GPG keys cannot be accessed in my place. Use [USTC mirror](https://mirrors.ustc.edu.cn/help/libnvidia-container.html) instead.
