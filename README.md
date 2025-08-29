@@ -1,5 +1,6 @@
 # Serving Qwen3-0.6B with SGLang
-[简体中文](docs/README_zh.md)
+
+> Please refer to [简体中文](docs/README_zh.md) if some of the expressions in this doc confuse you.
 
 This repo is the implementation of an assignment. The goal is to serve the Qwen3-0.6B model with SGLang, and then perform inference on HumanEval dataset, and finally evaluate the results.
 
@@ -26,7 +27,7 @@ Then a Docker container that starts the SGLang service will be set up. The avail
 |---------------------|----------------------------------------------------------------------|---------------------------------------------|
 | `--model-name`      | Model name                                                           | Qwen3-0.6B                                  |
 | `--port`            | Service port                                                         | 30000                                       |
-| `--tp`              | **T**ensor **P**arallel size (GPU Numbers)                | 1                                           |
+| `--tp`              | **T**ensor **P**arallel size (GPU Numbers)                | 1 (I only got 1 GPU)                                           |
 | `--local-save-path` | Local path to the model                                              | /NV/models_hf/Qwen/Qwen3-0.6B               |
 | `--container-name`  | Docker container name                                                | qwen-test                                   |
 | `--image`           | Docker image name                                                    | sglang/sglang:latest                        |
@@ -142,6 +143,16 @@ The pass rate results:
 | Think Mode | System Prompt | Output File | Pass@1 |
 |------------|---------------|-------------|-----------|
 | No         | Default       | he_outputs_pure_code.jsonl | 89.02% (146/164) |
+
+# 4. Performance & Quality Improvement
+## 4.1 Improving the HumanEval's metric
+- Use pass@$x$ with $x>1$ instead of pass@1. Pass@5 or pass@10 assesses diversity and robustness, reflecting real-world use cases where multiple attempts are allowed.
+- For those fail cases, maybe we can compare the generated code with the canonical solution provided by the HumanEval datasets. Maybe we can measure the code's similarity to the canonical solution in some way (like using better LLMs such as GPT-4).
+
+## 4.2 Enhancing the Inference and Evaluation Performance
+- **Parallel Inference**: For now, we just send the test requests sequentially to the SGLang backend, which means one test request cannot be sent until the inference of the previous one is done. GPU cannot be fully utilized in this situation. So maybe we can use multi-process technique, ensuring that multiple inference processes could be performed simultaneously.
+- **Parallel Evaluation**: Similarly, the evaluation process can be scaled and accelerated in the same way.
+- **Timing Limit**: For the evaluation process, timing limit should be enabled so that bad codes like endless loop would not run forever. **This should be done and I will implement it recently**.
 
 # Running Example
 Launch the SGLang backend:
