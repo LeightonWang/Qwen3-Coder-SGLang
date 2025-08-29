@@ -127,15 +127,36 @@ python3 auto-evaluate.py [OPTIONS]
 可用选项：
 | 参数 | 说明 | 默认值 |
 |------|------|--------|
-| `-f`, `--file` | The output file to be evaluated. | `outputs/humaneval_results.jsonl`. |  
+| `-f`, `--file` | 待评估文件，在 `outputs/` 目录下 | `humaneval_results.jsonl`. |  
+| `-o`, `--output` | 评估报告，存储在`results/` 目录下 | eval_report.jsonl |
 
-然后脚本会启动一个容器并自动执行评估。该过程与命令行方法相同。
+接下来脚本会自动启动一个容器并执行评估。过程与命令行方法一致。
 
 ### 3.3 评估结果
 通过率结果如下：
 | Think Mode | System Prompt | Output File | Pass Rate |
 |------------|---------------|-------------|-----------|
-| No         | 默认值       | he_results_no_think.jsonl | 87.80% (144/164) |
+| No         | 默认值       | he_outputs_pure_code.jsonl | 89.02% (146/164) |
+
+# 运行示例
+启动 SGLang 后端
+```bash
+python3 client.py
+```
+在 HumanEval 数据集上进行推理：
+```bash
+# (in a new terminal)
+cd inference
+python3 inference_he.py -o he_outputs_pure_code.jsonl
+```
+推理结果已存储在 `outputs/he_outputs_pure_code.jsonl`.
+
+使用 pass@1 指标进行评估：
+```bash
+cd ..
+python3 auto-evaluate.py -f he_outputs_pure_code.jsonl -o eval_report.jsonl
+```
+评估报告存储在 `results/eval_report.jsonl`。
 
 ## 故障排查
 这一部分主要是为自己记录在部署和开发过程中遇到的一些问题。
@@ -144,4 +165,4 @@ python3 auto-evaluate.py [OPTIONS]
     ```bash
     export HF_ENDPOINT=https://hf-mirror.com
     ```
-2. **无法获取 Nvidia Container Toolkit 的 GPG 密钥**：我这里无法访问官方源。请使用 [USTC mirror](https://mirrors.ustc.edu.cn/help/libnvidia-container.html) 。
+2. **无法获取 Nvidia Container Toolkit 的 GPG 密钥**：我这里无法访问官方源。使用[科大源](https://mirrors.ustc.edu.cn/help/libnvidia-container.html) 。

@@ -132,7 +132,8 @@ python3 auto-evaluate.py [OPTIONS]
 Available options:
 | Parameter | Description | Default |
 |------|------|--------|
-| `-f`, `--file` | The output file to be evaluated. | `outputs/humaneval_results.jsonl`. |  
+| `-f`, `--file` | The output file to be evaluated. In `outputs/` dir. | `humaneval_results.jsonl`. |  
+| `-o`, `--output` | The evaluation report. Store in `results/` | `eval_report.jsonl` |
 
 Then the script will launch a container and perform the evaluation automatically. The process is the same as the command line method.
 
@@ -140,7 +141,27 @@ Then the script will launch a container and perform the evaluation automatically
 The pass rate results:
 | Think Mode | System Prompt | Output File | Pass@1 |
 |------------|---------------|-------------|-----------|
-| No         | Default       | he_results_no_think.jsonl | 87.80% (144/164) |
+| No         | Default       | he_outputs_pure_code.jsonl | 89.02% (146/164) |
+
+# Running Example
+Launch the SGLang backend:
+```bash
+python3 client.py
+```
+Performing inference on HumanEval:
+```bash
+# (in a new terminal)
+cd inference
+python3 inference_he.py -o he_outputs_pure_code.jsonl
+```
+The inference outputs has been stored at `outputs/he_outputs_pure_code.jsonl`.
+
+Evaluate by pass@1:
+```bash
+cd ..
+python3 auto-evaluate.py -f he_outputs_pure_code.jsonl -o eval_report.jsonl
+```
+The evaluation report is stored at `results/eval_report.jsonl`.
 
 # Troubleshooting
 This part is mainly written for myself to record some problems I encountered during the deployment & development process.
