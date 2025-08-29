@@ -2,6 +2,7 @@ import json
 import requests
 from typing import List, Dict, Any
 import os
+import re
 from transformers import AutoTokenizer
 
 from config import MODEL_NAME, SYSTEM_PROMPT, SAMPLING_PARAMS
@@ -65,4 +66,29 @@ def write_outputs(outputs: List[Dict[str, str]], output_file: str = "../outputs/
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
     with open(output_file, "w") as f:
         for result in outputs:
+            result["completion"] = clean_completion(result["completion"])
             f.write(json.dumps(result) + "\n")
+
+def clean_completion(completion: str) -> str:
+    """
+    清理 completion：
+    1. 去掉 <think>...</think>
+    2. 提取 ```python``` 或 ``` 包裹的代码
+    3. 去掉前后空行
+    """
+    # 去掉 <think>...</think> 内容
+    completion = re.sub(r"<think>.*?</think>", "", completion, flags=re.DOTALL|re.IGNORECASE)
+    
+    # 提取 ```python ... ``` 中的代码
+    match = re.search(r"```python\s*(.*?)```", completion, re.DOTALL | re.IGNORECASE)
+    if not match:
+        # 提取普通 ``` ... ``` 中的代码
+        match = re.search(r"```(.*?)```", completion, re.DOTALL)
+    
+    if match:
+        code = match.group(1)
+    else:
+        # 没有 ``` 包裹，直接取剩下内容
+        code = completion
+    
+    return code

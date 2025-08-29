@@ -2,7 +2,7 @@ import subprocess
 import argparse
 import os
 
-def run_docker(file_to_eval: str):
+def run_docker(file_to_eval: str, output_file: str):
     """
     启动容器并运行 evaluation
     """
@@ -17,7 +17,7 @@ def run_docker(file_to_eval: str):
         "-v", f"{datasets_dir}:/app/datasets",
         "humaneval_eval:latest",
         "bash", "-c",
-        f"cd evaluate && python3 evaluate.py --file {file_to_eval}"
+        f"cd evaluate && python3 evaluate.py --file {file_to_eval} -o /app/results/{output_file}"
     ]
 
     print("🚀 Running docker command:\n", " ".join(docker_cmd))
@@ -27,9 +27,15 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run HumanEval evaluation inside Docker.")
     parser.add_argument(
         "-f", "--file",
-        default="../outputs/he_results_no_think.jsonl",
-        help="The output file to be evaluated (default: ../outputs/he_results_no_think.jsonl)"
+        default="he_results_no_think.jsonl",
+        help="The output file to be evaluated (default: he_results_no_think.jsonl)"
     )
+    parser.add_argument(
+        "-o", "--output",
+        default="eval_report.jsonl",
+        help="Path to save the evaluation results (default: eval_report.jsonl)"
+    )
+
     args = parser.parse_args()
 
-    run_docker(args.file)
+    run_docker("../outputs/" + args.file, args.output)
