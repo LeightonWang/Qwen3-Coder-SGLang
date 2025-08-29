@@ -1,5 +1,5 @@
 # Serving Qwen3-0.6B with SGLang
-[简体中文](README_zh.md)
+[简体中文](docs/README_zh.md)
 
 This repo is the implementation of an assignment. The goal is to serve the Qwen3-0.6B model with SGLang, and then perform inference on HumanEval dataset, and finally evaluate the results.
 

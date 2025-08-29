@@ -1,5 +1,5 @@
 # 使用 SGLang 部署 Qwen3-0.6B
-[English](README.md)
+[English](../README.md)
 
 这个仓库是一个作业的实现。目标是使用 SGLang 部署 Qwen3-0.6B 模型，然后在 HumanEval 数据集上进行推理，最后对结果进行评估。
 
