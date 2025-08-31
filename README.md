@@ -135,6 +135,7 @@ Available options:
 |------|------|--------|
 | `-f`, `--file` | The output file to be evaluated. In `outputs/` dir. | `humaneval_results.jsonl`. |  
 | `-o`, `--output` | The evaluation report. Store in `results/` | `eval_report.jsonl` |
+| `--tl` | Time limit for each evaluation. Unit is second. | `2` |
 
 Then the script will launch a container and perform the evaluation automatically. The process is the same as the command line method.
 
@@ -166,6 +167,11 @@ cd inference
 python3 inference_he.py -o he_outputs_pure_code.jsonl
 ```
 The inference outputs has been stored at `outputs/he_outputs_pure_code.jsonl`.
+
+Build the Docker image for evaluation:
+```bash
+docker build -t humaneval_eval:latest .
+```
 
 Evaluate by pass@1:
 ```bash

@@ -129,6 +129,7 @@ python3 auto-evaluate.py [OPTIONS]
 |------|------|--------|
 | `-f`, `--file` | 待评估文件，在 `outputs/` 目录下 | `humaneval_results.jsonl`. |  
 | `-o`, `--output` | 评估报告，存储在`results/` 目录下 | eval_report.jsonl |
+| `--tl` | 每个测试的时间限制。单位为秒。 | `2` |
 
 接下来脚本会自动启动一个容器并执行评估。过程与命令行方法一致。
 
@@ -159,7 +160,12 @@ python3 client.py
 cd inference
 python3 inference_he.py -o he_outputs_pure_code.jsonl
 ```
-推理结果已存储在 `outputs/he_outputs_pure_code.jsonl`.
+推理结果已存储在 `outputs/he_outputs_pure_code.jsonl`。
+
+构建评估用的 Docker 镜像：
+```bash
+docker build -t humaneval_eval:latest .
+```
 
 使用 pass@1 指标进行评估：
 ```bash

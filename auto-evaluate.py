@@ -2,7 +2,7 @@ import subprocess
 import argparse
 import os
 
-def run_docker(file_to_eval: str, output_file: str):
+def run_docker(file_to_eval: str, output_file: str, time_limit: float):
     """
     启动容器并运行 evaluation
     """
@@ -17,7 +17,7 @@ def run_docker(file_to_eval: str, output_file: str):
         "-v", f"{datasets_dir}:/app/datasets",
         "humaneval_eval:latest",
         "bash", "-c",
-        f"cd evaluate && python3 evaluate.py --file {file_to_eval} -o /app/results/{output_file}"
+        f"cd evaluate && python3 evaluate.py --file {file_to_eval} -o /app/results/{output_file} --tl {time_limit}"
     ]
 
     print("🚀 Running docker command:\n", " ".join(docker_cmd))
@@ -35,7 +35,14 @@ if __name__ == "__main__":
         default="eval_report.jsonl",
         help="Path to save the evaluation results (default: eval_report.jsonl)"
     )
+    parser.add_argument(
+        "--tl",
+        type=int,
+        default=1,
+        help="Time limit for each evaluation. (unit: s)"
+    )
 
     args = parser.parse_args()
 
-    run_docker("../outputs/" + args.file, args.output)
+    print(f"Launching evaluation with time limit: {args.tl}s")
+    run_docker("../outputs/" + args.file, args.output, args.tl)
