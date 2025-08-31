@@ -151,9 +151,17 @@ The pass rate results:
 - For those fail cases, maybe we can compare the generated code with the canonical solution provided by the HumanEval datasets. Maybe we can measure the code's similarity to the canonical solution in some way (like using better LLMs such as GPT-4).
 
 ## 4.2 Enhancing the Inference and Evaluation Performance
-- **Parallel Inference**: For now, we just send the test requests sequentially to the SGLang backend, which means one test request cannot be sent until the inference of the previous one is done. GPU cannot be fully utilized in this situation. So maybe we can use multi-process technique, ensuring that multiple inference processes could be performed simultaneously.
+- (Done) **Parallel Inference**: For now, we just send the test requests sequentially to the SGLang backend, which means one test request cannot be sent until the inference of the previous one is done. GPU cannot be fully utilized in this situation. So maybe we can use multi-process technique, ensuring that multiple inference processes could be performed simultaneously.
+
+  This has been done and here is the inference time of two ways.
+
+  | Mode | Total Inference Time (seconds) |
+  |------|----------------------|
+  | Sequential (No think) |  58.52  |
+  | Parallel (No think) | 18.34 |
+
 - **Parallel Evaluation**: Similarly, the evaluation process can be scaled and accelerated in the same way.
-- **Timing Limit**: For the evaluation process, timing limit should be enabled so that bad codes like endless loop would not run forever. **This should be done and I will implement it recently**.
+- (Done) **Timing Limit**: For the evaluation process, timing limit should be enabled so that bad codes like endless loop would not run forever. ~~**This should be done and I will implement it recently**.~~
 
 # Running Example
 Launch the SGLang backend:

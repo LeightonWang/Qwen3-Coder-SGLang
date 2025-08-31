@@ -2,6 +2,7 @@ import time
 from tqdm import tqdm
 import argparse
 import requests
+import time
 
 from utils import load_humaneval, process_sample, write_outputs
 from config import MODEL_NAME, PORT
@@ -34,10 +35,14 @@ def main():
     humaneval_json = load_humaneval(dataset_path)
 
     outputs = []
+    
+    start = time.time()
     for sample in tqdm(humaneval_json):
         result = process_sample(sample, url, think)
         outputs.append(result)
+    end = time.time()
 
+    print(f"Parallel-requests inference used {end-start} seconds.")
     write_outputs(outputs, output_file=f"../outputs/{output_file}")
 
 if __name__ == "__main__":
