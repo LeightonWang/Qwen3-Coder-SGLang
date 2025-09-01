@@ -148,6 +148,7 @@ The pass rate results:
 # 4. Performance & Quality Improvement
 ## 4.1 Improving the HumanEval's metric
 - Use pass@$x$ with $x>1$ instead of pass@1. Pass@5 or pass@10 assesses diversity and robustness, reflecting real-world use cases where multiple attempts are allowed.
+- For the passed cases, we can measure their complexity by comparing their running time with that of the canonical solutions if more scaled test data are provided.
 - For those fail cases, maybe we can compare the generated code with the canonical solution provided by the HumanEval datasets. Maybe we can measure the code's similarity to the canonical solution in some way (like using better LLMs such as GPT-4).
 
 ## 4.2 Enhancing the Inference and Evaluation Performance
