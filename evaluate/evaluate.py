@@ -47,6 +47,13 @@ def evaluate_sample(sample, time_limit=2):
         exec(code, local_env)
         exec(sample["test"], local_env)
 
+        candidate_fn = local_env.get(entry_point)
+
+        if "check" in local_env:
+            local_env["check"](candidate_fn)  
+        else:
+            raise RuntimeError(f"check() not found for task {task_id}")
+
         # 取消超时
         signal.alarm(0)
 

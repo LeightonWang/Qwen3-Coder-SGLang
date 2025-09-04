@@ -143,7 +143,7 @@ Then the script will launch a container and perform the evaluation automatically
 The pass rate results:
 | Think Mode | System Prompt | Output File | Pass@1 |
 |------------|---------------|-------------|-----------|
-| No         | Default       | he_outputs_pure_code.jsonl | 89.02% (146/164) |
+| No         | Default       | he_outputs_pure_code.jsonl | 23.17% (38/164) |
 
 # 4. Performance & Quality Improvement
 ## 4.1 Improving the HumanEval's metric

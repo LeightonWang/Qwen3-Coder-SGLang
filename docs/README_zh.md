@@ -137,7 +137,7 @@ python3 auto-evaluate.py [OPTIONS]
 通过率结果如下：
 | Think Mode | System Prompt | Output File | Pass Rate |
 |------------|---------------|-------------|-----------|
-| No         | 默认值       | he_outputs_pure_code.jsonl | 89.02% (146/164) |
+| No         | 默认值       | he_outputs_pure_code.jsonl | 23.17% (38/164) |
 
 # 4. 性能与质量优化
 ## 4.1 改进HumanEval评估指标
