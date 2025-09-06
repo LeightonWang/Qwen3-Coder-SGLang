@@ -88,7 +88,11 @@ def clean_completion(completion: str) -> str:
     if match:
         code = match.group(1)
     else:
-        # 没有 ``` 包裹，直接取剩下内容
+        # 查看有没有半边包裹
+        match = re.search(r"```python\s*(.*?)", completion, re.DOTALL | re.IGNORECASE)
+    if match:
+        code = match.group(1)
+    else: # 啥也没有，直接爆了
         code = completion
     
     return code

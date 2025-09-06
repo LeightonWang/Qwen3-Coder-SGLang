@@ -10,12 +10,31 @@ SAMPLING_PARAMS = {
     "stop_token_ids": [151645, 151643],
 }
 
+# ORIGINAL PROMPT
+# SYSTEM_PROMPT = {
+#     "role": "system",
+#     "content": (
+#         "You are a Python coding assistant. "
+#         "Your task is to solve the given problem. "
+#         "Directly output the function implementation in Python. "
+#         "Do NOT output explanations or reasoning. "
+#     ),
+# }
+
+# PROMPT 1
+# SYSTEM_PROMPT = {
+#     "role": "system",
+#     "content": (
+#         "You are a coding assistant. "
+#         "Your task is to solve the given problem in Python. "
+#     ),
+# }
+
+# PROMPT 2
 SYSTEM_PROMPT = {
     "role": "system",
     "content": (
         "You are a Python coding assistant. "
-        "Your task is to solve the given problem. "
-        "Directly output the function implementation in Python. "
-        "Do NOT output explanations or reasoning. "
+        "Solve the problem by writing a Python function. "
     ),
 }
