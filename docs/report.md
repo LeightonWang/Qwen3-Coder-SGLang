@@ -88,4 +88,7 @@ def clean_completion(completion: str) -> str:
     return code
 ```
 
-And pass@1 has increasd.
+And pass@1 has increasd. To verify the effectiveness of the post-processing, I count the error types for the failed cases:
+![cnt_prompt2_newps](../pics/err_cnt_prompt2_newps.png)
+
+The syntax errors are caused by the code itself such as *return out of function* instead of the format of completion.
