@@ -5,7 +5,7 @@ This is the report about improving the pass@1 result by tuning the prompt and po
 | Prompt | Origin | Prompt 1 | Prompt 2 |
 | --- | --- | --- | --- |
 | Pass@1 (%) | 23.17 | 26.22 | 26.83 |
-| Pass@1 (More Post-Processing) | / | / | 30.49 |
+| Pass@1 (More Post-Processing) | 29.88 | 26.83 | 30.49 |
 
 # Tuning The Prompt
 
